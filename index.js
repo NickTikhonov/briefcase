@@ -46,6 +46,9 @@ function toggleTimer() {
 }
 
 function updateDisplay() {
+  if (!startTime) {
+    tray.setTitle(' $0.00')
+  }
   const elapsedTime = Date.now() - startTime
   const hours = elapsedTime / 3600000
   const amount = (hours * rate).toFixed(2)
