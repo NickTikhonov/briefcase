@@ -49,7 +49,8 @@ function updateDisplay() {
   const elapsedTime = Date.now() - startTime
   const hours = elapsedTime / 3600000
   const amount = (hours * rate).toFixed(2)
-  tray.setTitle(` $${amount}`)
+  const render = isNaN(amount) ? ' $0.00' : ` $${amount}`
+  tray.setTitle(render)
   
   if (summaryWindow) {
     summaryWindow.webContents.send('update-summary', { hours, amount, rate })
@@ -71,7 +72,7 @@ function createRateWindow() {
 
   rateWindow = new BrowserWindow({
     width: 300,
-    height: 150,
+    height: 270,
     show: false,
     frame: true,
     fullscreenable: false,
@@ -99,8 +100,8 @@ function createSummaryWindow() {
   }
 
   summaryWindow = new BrowserWindow({
-    width: 300,
-    height: 200,
+    width: 400,
+    height: 400,
     show: false,
     frame: true,
     fullscreenable: false,
