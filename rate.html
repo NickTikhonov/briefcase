@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modify Rate</title>
+</head>
+<body>
+    <h3>Current Rate: $<span id="currentRate"></span>/hour</h3>
+    <form id="rateForm">
+        <label for="newRate">New Rate:</label>
+        <input type="number" id="newRate" name="newRate" step="0.01" required>
+        <button type="submit">Update</button>
+    </form>
+
+    <script>
+    const { ipcRenderer } = require('electron')
+    
+    document.getElementById('currentRate').textContent = ipcRenderer.sendSync('get-rate')
+
+    document.getElementById('rateForm').addEventListener('submit', (e) => {
+        e.preventDefault()
+        const newRate = document.getElementById('newRate').value
+        ipcRenderer.send('update-rate', newRate)
+    })
+    </script>
+</body>
+</html>
