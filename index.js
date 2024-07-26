@@ -64,7 +64,32 @@ function resetTimer() {
 }
 
 function createRateWindow() {
-  // ... (keep the existing createRateWindow function)
+  if (rateWindow) {
+    rateWindow.focus()
+    return
+  }
+
+  rateWindow = new BrowserWindow({
+    width: 300,
+    height: 150,
+    show: false,
+    frame: true,
+    fullscreenable: false,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  })
+
+  rateWindow.loadFile('rate.html')
+  rateWindow.once('ready-to-show', () => {
+    rateWindow.show()
+  })
+
+  rateWindow.on('closed', () => {
+    rateWindow = null
+  })
 }
 
 function createSummaryWindow() {
